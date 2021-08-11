@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Switch } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import { getIsAuthenticated } from "../../redux/auth/auth-selectors";
@@ -7,7 +7,8 @@ import { mainRoutes } from "../../routes/mainRoutes";
 import PrivateRoute from "../../routes/PrivateRoute";
 import PublicRoute from "../../routes/PublicRoute";
 
-const Main = ({ isAuthenticated }) => {
+const Main = () => {
+  const isAuthenticated = useSelector(getIsAuthenticated);
   return (
     <main>
       <Suspense
@@ -43,10 +44,12 @@ const Main = ({ isAuthenticated }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: getIsAuthenticated(state),
-});
-export default connect(mapStateToProps)(Main);
+export default Main;
+
+// const mapStateToProps = (state) => ({
+//   isAuthenticated: getIsAuthenticated(state),
+// });
+// export default connect(mapStateToProps)(Main);
 
 // import React, { Suspense, lazy } from 'react';
 // import { Route, Switch } from 'react-router-dom';
