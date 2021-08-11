@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
 import { error } from "@pnotify/core/dist/PNotify.js";
@@ -18,8 +18,7 @@ const Auth = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //   const [error, setError] = useState("");
-  //   const prevError = useRef("");
+
   const isError = useSelector(getErrorAuth);
 
   useEffect(() => {
@@ -28,7 +27,6 @@ const Auth = () => {
         text: isError,
         delay: 1000,
       });
-    // prevError.current = isError;
   }, [isError]);
 
   const onRegister = useCallback(
@@ -122,6 +120,10 @@ const Auth = () => {
 
 export default Auth;
 
+//   const [error, setError] = useState("");
+//   const prevError = useRef("");
+// prevError.current = isError;
+// useRef
 // <button type="submit" className="user-button">
 //   {match.url === "/register" ? "Register" : "Login"}
 // </button>;
