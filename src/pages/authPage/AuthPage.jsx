@@ -6,7 +6,11 @@ const AuthPage = () => {
   const match = useRouteMatch();
   return (
     <>
-      {match.url === "/register" ? <h2>Sign up</h2> : <h2>Log in</h2>}
+      {match.url === "/register" ? (
+        <h2 className="regissterTitle">Sign up</h2>
+      ) : (
+        <h2 className="regissterTitle">Log in</h2>
+      )}
       <Auth />
     </>
   );

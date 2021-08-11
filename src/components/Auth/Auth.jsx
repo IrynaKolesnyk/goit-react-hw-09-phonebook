@@ -1,33 +1,35 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
 import { error } from "@pnotify/core/dist/PNotify.js";
+import "@pnotify/core/dist/BrightTheme.css";
+import "@pnotify/core/dist/PNotify.css";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { register, login } from "../../redux/auth/auth-operations";
 import { getErrorAuth } from "../../redux/error/error-selectors";
 import { useEffect } from "react";
+import AuthStyled from "./AuthStyled";
 
 const Auth = () => {
   const dispatch = useDispatch();
+  const match = useRouteMatch();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  //   const [error, setError] = useState("");
+  //   const prevError = useRef("");
   const isError = useSelector(getErrorAuth);
 
-  const match = useRouteMatch();
-
-  // useEffect(() => {
-
-  // })
-
-  //   componentDidUpdate(prevProps, prevState) {
-  //     if (prevProps.isError !== this.props.isError && this.props.isError) {
-  //       error({
-  //         text: this.props.isError,
-  //         delay: 1000,
-  //       });
-  //     }
-  //   }
+  useEffect(() => {
+    if (isError !== null)
+      error({
+        text: isError,
+        delay: 1000,
+      });
+    // prevError.current = isError;
+  }, [isError]);
 
   const onRegister = useCallback(
     (name, email, password) => {
@@ -66,56 +68,103 @@ const Auth = () => {
   );
 
   return (
-    <div>
+    <AuthStyled>
       <form onSubmit={onHandleSubmit} autoComplete="off">
         {match.url === "/register" && (
-          <label className="user-label">
-            Name
-            <input
-              type="text"
-              name="name"
-              placeholder="David Gransky"
-              value={name}
-              minLength="3"
-              onChange={onHandleChange}
-              required
-            />
-          </label>
-        )}
-        <label className="user-label">
-          Email
-          <input
-            type="email"
-            name="email"
-            onChange={onHandleChange}
-            value={email}
-            placeholder="david@gmail.com"
+          <TextField
+            type="text"
+            name="name"
+            value={name}
             minLength="3"
-            autoComplete="off"
             required
-          />
-        </label>
-        <label className="user-label">
-          Password
-          <input
-            type="password"
-            name="password"
             onChange={onHandleChange}
-            value={password}
-            required
-            placeholder="Qwerty123"
-            autoComplete="off"
+            label="Name"
+            variant="outlined"
+            id="outlined-basic"
+            className="marginRight"
           />
-        </label>
-        <button type="submit" className="user-button">
-          {match.url === "/register" ? "Register" : "Login"}
-        </button>
+        )}
+        <TextField
+          type="email"
+          name="email"
+          onChange={onHandleChange}
+          value={email}
+          minLength="3"
+          required
+          label="Email"
+          variant="outlined"
+          id="outlined-basic"
+          className="marginRight"
+        />
+        <TextField
+          type="password"
+          name="password"
+          value={password}
+          onChange={onHandleChange}
+          minLength="3"
+          required
+          label="Password"
+          variant="outlined"
+          id="outlined-basic"
+        />
+        <Button
+          type="submit"
+          className="registerBtn"
+          variant="contained"
+          color="primary"
+        >
+          {match.url === "/register" ? "Sign up" : "Login"}
+        </Button>
       </form>
-    </div>
+    </AuthStyled>
   );
 };
 
 export default Auth;
+
+// <button type="submit" className="user-button">
+//   {match.url === "/register" ? "Register" : "Login"}
+// </button>;
+
+//   <label className="user-label">
+//     Name
+//     <input
+//       type="text"
+//       name="name"
+//       placeholder="David Gransky"
+//       value={name}
+//       minLength="3"
+//       onChange={onHandleChange}
+//       required
+//     />
+//   </label>
+
+// <label className="user-label">
+// Email
+// <input
+//     type="email"
+//     name="email"
+//     onChange={onHandleChange}
+//     value={email}
+//     placeholder="david@gmail.com"
+//     minLength="3"
+//     autoComplete="off"
+//     required
+// />
+// </label>;
+
+// <label className="user-label">
+//   Password
+//   <input
+//     type="password"
+//     name="password"
+//     onChange={onHandleChange}
+//     value={password}
+//     required
+//     placeholder="Qwerty123"
+//     autoComplete="off"
+//   />
+// </label>;
 
 // class Auth extends Component {
 //   state = {

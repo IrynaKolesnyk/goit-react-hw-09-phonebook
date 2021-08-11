@@ -1,10 +1,14 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const ContactListStyled = styled.ul`
   margin-top: 50px;
   align-items: baseline;
+  margin-bottom: 100px;
 
   .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     &:not(:last-child) {
       margin-bottom: 15px;
     }
@@ -22,9 +26,6 @@ const ContactListStyled = styled.ul`
     color: #202733;
     font-weight: 600;
     font-size: 20px;
-  }
-  .delBtn {
-    margin-left: 200px;
   }
 `;
 

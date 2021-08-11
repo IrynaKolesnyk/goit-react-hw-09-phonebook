@@ -27,6 +27,7 @@ const ContactList = () => {
               className="delBtn"
               type="button"
               onClick={handleDelete}
+              size="small"
             >
               Delete
             </Button>
