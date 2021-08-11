@@ -120,6 +120,8 @@ const Auth = () => {
 
 export default Auth;
 
+// useReducer?
+
 //   const [error, setError] = useState("");
 //   const prevError = useRef("");
 // prevError.current = isError;

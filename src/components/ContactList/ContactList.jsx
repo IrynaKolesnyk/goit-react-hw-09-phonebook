@@ -5,6 +5,7 @@ import { getVisibleContacts } from "../../redux/phoneBook/contacts-selectors";
 import { deleteContact } from "../../redux/phoneBook/contacts-operations";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 const ContactList = () => {
   const dispatch = useDispatch();
@@ -12,28 +13,36 @@ const ContactList = () => {
   const onDeleteContact = (id) => dispatch(deleteContact(id));
   return (
     <ContactListStyled>
-      {contacts.map((contact) => {
-        const { id, name, number } = contact;
-        const handleDelete = () => onDeleteContact(id);
-
-        return (
-          <li className="item" key={id}>
-            <p className="name">{name}:</p>
-            <p className="number">{number}</p>
-            <Button
-              variant="contained"
-              color="secondary"
-              startIcon={<DeleteIcon />}
-              className="delBtn"
-              type="button"
-              onClick={handleDelete}
-              size="small"
+      <TransitionGroup component="ul">
+        {contacts.map((contact) => {
+          const { id, name, number } = contact;
+          const handleDelete = () => onDeleteContact(id);
+          return (
+            <CSSTransition
+              transitionName="item"
+              key={id}
+              timeout={250}
+              className="item"
             >
-              Delete
-            </Button>
-          </li>
-        );
-      })}
+              <li className="item" key={id}>
+                <p className="name">{name}:</p>
+                <p className="number">{number}</p>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  startIcon={<DeleteIcon />}
+                  className="delBtn"
+                  type="button"
+                  onClick={handleDelete}
+                  size="small"
+                >
+                  Delete
+                </Button>
+              </li>
+            </CSSTransition>
+          );
+        })}
+      </TransitionGroup>
     </ContactListStyled>
   );
 };
