@@ -1,12 +1,15 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ContactListStyled from "./ContactListStyled";
 import { getVisibleContacts } from "../../redux/phoneBook/contacts-selectors";
 import { deleteContact } from "../../redux/phoneBook/contacts-operations";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-const ContactList = ({ contacts, onDeleteContact }) => {
+const ContactList = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getVisibleContacts);
+  const onDeleteContact = (id) => dispatch(deleteContact(id));
   return (
     <ContactListStyled>
       {contacts.map((contact) => {
@@ -34,14 +37,16 @@ const ContactList = ({ contacts, onDeleteContact }) => {
   );
 };
 
-const mapstateToProps = (state) => {
-  return {
-    contacts: getVisibleContacts(state),
-  };
-};
+export default ContactList;
 
-const mapDispatchToProps = (dispatch) => ({
-  onDeleteContact: (id) => dispatch(deleteContact(id)),
-});
+// const mapstateToProps = (state) => {
+//   return {
+//     contacts: getVisibleContacts(state),
+//   };
+// };
 
-export default connect(mapstateToProps, mapDispatchToProps)(ContactList);
+// const mapDispatchToProps = (dispatch) => ({
+//   onDeleteContact: (id) => dispatch(deleteContact(id)),
+// });
+
+// export default connect(mapstateToProps, mapDispatchToProps)(ContactList);
