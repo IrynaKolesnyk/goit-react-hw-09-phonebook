@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { error } from "@pnotify/core/dist/PNotify.js";
 import { register, login } from "../../redux/auth/auth-operations";
@@ -45,12 +45,7 @@ class Auth extends Component {
     const { name, email, password } = this.state;
     return (
       <div>
-        <form
-          onSubmit={this.onHandleSubmit}
-          className="user-form"
-          autoComplete="off"
-          name="userForm"
-        >
+        <form onSubmit={this.onHandleSubmit} autoComplete="off">
           {pathname === "/register" && (
             <label className="user-label">
               Name
@@ -72,10 +67,9 @@ class Auth extends Component {
               name="email"
               onChange={this.onHandleChange}
               value={email}
-              className="user-input"
-              placeholder="alex@gmail.com"
+              placeholder="david@gmail.com"
               minLength="3"
-              autoComplete="on"
+              autoComplete="off"
               required
             />
           </label>
@@ -86,10 +80,9 @@ class Auth extends Component {
               name="password"
               onChange={this.onHandleChange}
               value={password}
-              className="user-input"
               required
               placeholder="Qwerty123"
-              autoComplete="on"
+              autoComplete="off"
             />
           </label>
           <button type="submit" className="user-button">
@@ -106,3 +99,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { register, login })(withRouter(Auth));
+
+// const isError = useSelector(getErrorAuth);

@@ -1,5 +1,16 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+
+const PrivateRoute = ({ isAuthenticated, path, component, exact }) => {
+  return !isAuthenticated ? (
+    <Redirect to="/" />
+  ) : (
+    <Route path={path} exact={exact} component={component} />
+  );
+};
+
+export default PrivateRoute;
+
 // import { connect } from "react-redux";
 // import { getIsAuthenticated } from "../../redux/auth/auth-selectors";
 
@@ -21,13 +32,3 @@ import { Route, Redirect } from "react-router-dom";
 // });
 
 // export default connect(mapStateToProps)(PrivateRoute);
-
-const PrivateRoute = ({ isAuthenticated, path, component, exact }) => {
-  return !isAuthenticated ? (
-    <Redirect to="/" />
-  ) : (
-    <Route path={path} exact={exact} component={component} />
-  );
-};
-
-export default PrivateRoute;

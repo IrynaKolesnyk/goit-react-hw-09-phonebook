@@ -9,7 +9,7 @@ import UserMenu from "../UserMenu/UserMenu";
 const Navigation = ({ isAuthenticated, logoutSuccess }) => {
   return (
     <nav>
-      <ul className="navList">
+      <ul className="siteNav">
         {mainRoutes.map((route) => (
           <NavigationListItem
             {...route}

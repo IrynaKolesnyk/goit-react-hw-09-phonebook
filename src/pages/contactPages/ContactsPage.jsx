@@ -1,23 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
+import ContactForm from "../../components/ContactForm/ContactForm";
+import Filter from "../../components/Filter/Filter";
+import ContactList from "../../components/ContactList/ContactList";
+import { fetchContacts } from "../../redux/phoneBook/contacts-operations";
+import ContactPageStyled from "./ContactPageStyled";
+import { useDispatch } from "react-redux";
+
 const ContactsPage = () => {
-  return <h2>страница контактов</h2>;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  return (
+    <ContactPageStyled className="phoneBook">
+      <h2 className="contactTitle">Phonebook</h2>
+      <ContactForm />
+      <h2 className="contactListTitle">Contacts</h2>
+      <Filter />
+      <ContactList />
+    </ContactPageStyled>
+  );
 };
 
 export default ContactsPage;
 
-// import React, { Component } from 'react';
-// import ContactForm from '../../components/ContactForm/ContactForm';
-// import Filter from '../../components/Filter/Filter';
-// import ContactList from '../../components/ContactList/ContactList';
-// import { connect } from 'react-redux';
-// import {
-//   getContacts,
-//   getLoading,
-// } from '../../redux/phoneBook/contacts-selectors';
-// import { getErrorContacts } from '../../redux/error/error-selectors';
-// import { fetchContacts } from '../../redux/phoneBook/contacts-operations';
-// import ContactPageStyled from './ContactPageStyled';
-
+// import React, { Component } from "react";
+// import ContactForm from "../../components/ContactForm/ContactForm";
+// import Filter from "../../components/Filter/Filter";
+// import ContactList from "../../components/ContactList/ContactList";
+// import { connect } from "react-redux";
+// import { fetchContacts } from "../../redux/phoneBook/contacts-operations";
+// import ContactPageStyled from "./ContactPageStyled";
 // class ContactsPage extends Component {
 //   state = {};
 //   componentDidMount() {
@@ -25,21 +40,21 @@ export default ContactsPage;
 //   }
 //   render() {
 //     return (
-//       <ContactPageStyled className="phoneBook">
-//         <h2 className="contactTitle">Phonebook</h2>
-//         <ContactForm />
-//         <h2 className="contactListTitle">Contacts</h2>
-//         <Filter />
-//         <ContactList />
-//       </ContactPageStyled>
+// <ContactPageStyled className="phoneBook">
+//   <h2 className="contactTitle">Phonebook</h2>
+//   <ContactForm />
+//   <h2 className="contactListTitle">Contacts</h2>
+//   <Filter />
+//   <ContactList />
+// </ContactPageStyled>
 //     );
 //   }
 // }
-// const mapStateToProps = state => ({
-//   contacts: getContacts(state),
-//   isLoadingContacts: getLoading(state),
-//   isError: getErrorContacts(state),
-// });
+// // const mapStateToProps = (state) => ({
+// //   contacts: getContacts(state),
+// //   isLoadingContacts: getLoading(state),
+// //   isError: getErrorContacts(state),
+// // });
 
 // const mapDispatchToProps = {
 //   fetchContacts: fetchContacts,

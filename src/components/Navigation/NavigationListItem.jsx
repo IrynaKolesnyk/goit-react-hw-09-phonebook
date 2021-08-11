@@ -7,11 +7,11 @@ const NavigationListItem = ({
   exact,
   name,
   isPrivate,
-  restricted,
+  isRestricted,
 }) => {
   return (
     <>
-      {!isPrivate && !restricted && (
+      {!isPrivate && !isRestricted && (
         <li className="navListItem" key={path}>
           <NavLink
             to={path}
@@ -23,7 +23,7 @@ const NavigationListItem = ({
           </NavLink>
         </li>
       )}
-      {isPrivate && !restricted && isAuthenticated && (
+      {isPrivate && !isRestricted && isAuthenticated && (
         <li className="navListItem" key={path}>
           <NavLink
             to={path}
@@ -35,7 +35,7 @@ const NavigationListItem = ({
           </NavLink>
         </li>
       )}
-      {!isPrivate && restricted && !isAuthenticated && (
+      {!isPrivate && isRestricted && !isAuthenticated && (
         <li className="navListItem" key={path}>
           <NavLink
             to={path}

@@ -6,9 +6,9 @@ const PublicRoute = ({
   path,
   component,
   exact,
-  restricted,
+  isRestricted,
 }) => {
-  return isAuthenticated && restricted ? (
+  return isAuthenticated && isRestricted ? (
     <Redirect to="/contacts" />
   ) : (
     <Route path={path} exact={exact} component={component} />
