@@ -12,7 +12,12 @@ const ContactForm = () => {
 
   const contacts = useSelector(getContacts);
 
-  const onSubmit = (name, number) => dispatch(addContact(name, number));
+  const onSubmit = useCallback(
+    (name, number) => {
+      dispatch(addContact(name, number));
+    },
+    [dispatch]
+  );
 
   const handelInputChange = (event) => {
     const { name, value } = event.target;

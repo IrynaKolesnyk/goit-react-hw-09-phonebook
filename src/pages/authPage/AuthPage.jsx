@@ -1,15 +1,15 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import Auth from "../../components/Auth/Auth";
 
-const AuthPage = ({ location }) => {
-  const pathname = location.pathname;
+const AuthPage = () => {
+  const match = useRouteMatch();
   return (
     <>
-      {pathname === "/register" ? <h2>Sign up</h2> : <h2>Log in</h2>}
+      {match.url === "/register" ? <h2>Sign up</h2> : <h2>Log in</h2>}
       <Auth />
     </>
   );
 };
 
-export default withRouter(AuthPage);
+export default AuthPage;
