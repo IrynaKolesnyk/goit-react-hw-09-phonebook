@@ -1,12 +1,12 @@
 import React from "react";
-import { connect } from "react-redux";
-import { logoutSuccess } from "../../redux/auth/auth-actions";
 import { mainRoutes } from "../../routes/mainRoutes";
 import { getIsAuthenticated } from "../../redux/auth/auth-selectors";
 import NavigationListItem from "./NavigationListItem";
 import UserMenu from "../UserMenu/UserMenu";
+import { useSelector } from "react-redux";
 
-const Navigation = ({ isAuthenticated, logoutSuccess }) => {
+const Navigation = () => {
+  const isAuthenticated = useSelector(getIsAuthenticated);
   return (
     <nav>
       <ul className="siteNav">
@@ -23,8 +23,8 @@ const Navigation = ({ isAuthenticated, logoutSuccess }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: getIsAuthenticated(state),
-});
+export default Navigation;
 
-export default connect(mapStateToProps, { logoutSuccess })(Navigation);
+// const mapStateToProps = (state) => ({
+//   isAuthenticated: getIsAuthenticated(state),
+// });
