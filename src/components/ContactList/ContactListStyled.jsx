@@ -1,28 +1,11 @@
-import styled, { css, keyframes } from "styled-components";
-const fadeIn = keyframes`0% {
-      opacity: 0;
-      transform: translateX(-100px);
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }`;
-
-const fadeOut = keyframes`0% {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(100px);
-      opacity: 0;
-    }`;
+import styled from "styled-components";
 
 const ContactListStyled = styled.div`
   margin-top: 50px;
   align-items: baseline;
   margin-bottom: 100px;
 
-  .item {
+  .item_list {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,20 +14,21 @@ const ContactListStyled = styled.div`
     }
   }
 
-  .item-enter-active {
-    animation: ${(props) =>
-      props.animate &&
-      css`
-        ${fadeIn} 500ms forwards
-      `};
+  .item-enter {
+    opacity: 0;
   }
 
+  .item-enter-active {
+    opacity: 1;
+    transition: opacity 250ms linear;
+  }
+
+  .item-exit {
+    opacity: 1;
+  }
   .item-exit-active {
-    animation: ${(props) =>
-      props.animate &&
-      css`
-        ${fadeOut} 500ms forwards
-      `};
+    opacity: 0;
+    transition: opacity 250ms linear;
   }
 
   p {
@@ -65,5 +49,34 @@ const ContactListStyled = styled.div`
 
 export default ContactListStyled;
 
+// , { css, keyframes }
+
+// const fadeIn = keyframes`0% {
+//       opacity: 0;
+//       transform: translateX(-100px);
+//     }
+//     100% {
+//       transform: translateX(0);
+//       opacity: 1;
+//     }`;
+
+// const fadeOut = keyframes`0% {
+//       opacity: 1;
+//       transform: translateX(0);
+//     }
+//     100% {
+//       transform: translateX(100px);
+//       opacity: 0;
+//     }`;
 /* animation: ${fadeOut} 500ms forwards; */
 /* animation: ${fadeIn} 500ms forwards; */
+// animation: ${(props) =>
+//       props.animate &&
+//       css`
+//         ${fadeIn} 500ms forwards
+//       `};
+// animation: ${(props) =>
+//       props.animate &&
+//       css`
+//         ${fadeOut} 500ms forwards
+//       `};

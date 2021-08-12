@@ -21,10 +21,10 @@ const ContactList = () => {
             <CSSTransition
               transitionName="item"
               key={id}
-              timeout={250}
-              className="item"
+              timeout={1000}
+              classNames="item"
             >
-              <li className="item" key={id}>
+              <li className="item_list" key={id}>
                 <p className="name">{name}:</p>
                 <p className="number">{number}</p>
                 <Button
