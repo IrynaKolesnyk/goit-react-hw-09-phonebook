@@ -1,8 +1,8 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import phoneBookReducer from './phoneBook/phoneBookReducer';
-import authReducer from './auth/auth-reducer';
-import error from './error/error';
-import storage from 'redux-persist/lib/storage';
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import phoneBookReducer from "./phoneBook/phoneBookReducer";
+import authReducer from "./auth/auth-reducer";
+import error from "./error/error-reducer";
+import storage from "redux-persist/lib/storage";
 
 import {
   persistStore,
@@ -13,12 +13,12 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
+} from "redux-persist";
 
 const authPersistConfig = {
-  key: 'auth',
+  key: "auth",
   storage,
-  whitelist: ['token'],
+  whitelist: ["token"],
 };
 
 const middleware = [

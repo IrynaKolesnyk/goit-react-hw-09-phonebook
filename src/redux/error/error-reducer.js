@@ -1,4 +1,4 @@
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer } from "@reduxjs/toolkit";
 import {
   getCurrentUserError,
   getCurrentUserRequest,
@@ -8,7 +8,7 @@ import {
   logoutRequest,
   registerError,
   registerRequest,
-} from '../auth/auth-actions';
+} from "../auth/auth-actions";
 import {
   addContactError,
   addContactRequest,
@@ -16,12 +16,14 @@ import {
   deleteContactRequest,
   getContactError,
   getContactRequest,
-} from '../phoneBook/phoneBookActions';
+} from "../phoneBook/phoneBookActions";
+import { resetError } from "./error-actions";
 
 const setError = (_, { payload }) => payload;
 const refreshError = () => null;
 
 const error = createReducer(null, {
+  [resetError]: refreshError,
   [registerRequest]: refreshError,
   [loginRequest]: refreshError,
   [logoutRequest]: refreshError,

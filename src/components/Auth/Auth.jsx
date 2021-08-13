@@ -10,6 +10,7 @@ import { register, login } from "../../redux/auth/auth-operations";
 import { getErrorAuth } from "../../redux/error/error-selectors";
 import { useEffect } from "react";
 import AuthStyled from "./AuthStyled";
+import { resetError } from "../../redux/error/error-actions";
 
 const initialState = {
   name: "",
@@ -21,12 +22,16 @@ const Auth = () => {
   const [user, setUser] = useState(initialState);
   const dispatch = useDispatch();
   const match = useRouteMatch();
+  const isError = useSelector(getErrorAuth);
 
   //   const [name, setName] = useState("");
   //   const [email, setEmail] = useState("");
   //   const [password, setPassword] = useState("");
 
-  const isError = useSelector(getErrorAuth);
+  useEffect(() => {
+    console.log("hi");
+    return () => dispatch(resetError());
+  }, []);
 
   useEffect(() => {
     if (isError !== null)
@@ -34,7 +39,8 @@ const Auth = () => {
         text: isError,
         delay: 1000,
       });
-  }, [isError]);
+    // return () => dispatch(resetError());
+  }, [isError, dispatch]);
 
   const onRegister = useCallback(
     ({ name, email, password }) => {
@@ -81,7 +87,7 @@ const Auth = () => {
     (event) => {
       event.preventDefault();
       match.url === "/register" ? onRegister(user) : onLogin(user);
-      setUser("");
+      setUser({ name: "", email: "", password: "" });
     },
     [user, match.url, onRegister, onLogin]
   );
