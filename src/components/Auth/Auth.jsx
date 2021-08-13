@@ -11,13 +11,20 @@ import { getErrorAuth } from "../../redux/error/error-selectors";
 import { useEffect } from "react";
 import AuthStyled from "./AuthStyled";
 
+const initialState = {
+  name: "",
+  email: "",
+  password: "",
+};
+
 const Auth = () => {
+  const [user, setUser] = useState(initialState);
   const dispatch = useDispatch();
   const match = useRouteMatch();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  //   const [name, setName] = useState("");
+  //   const [email, setEmail] = useState("");
+  //   const [password, setPassword] = useState("");
 
   const isError = useSelector(getErrorAuth);
 
@@ -30,39 +37,53 @@ const Auth = () => {
   }, [isError]);
 
   const onRegister = useCallback(
-    (name, email, password) => {
+    ({ name, email, password }) => {
       dispatch(register({ name, email, password }));
     },
     [dispatch]
   );
 
   const onLogin = useCallback(
-    (email, password) => {
+    ({ email, password }) => {
       dispatch(login({ email, password }));
     },
     [dispatch]
   );
 
+  //   const onHandleChange = (event) => {
+  //     const { name, value } = event.target;
+  //     if (name === "name") setName(value);
+  //     if (name === "email") setEmail(value);
+  //     if (name === "password") setPassword(value);
+  //     //   this.setState({ [name]: value });
+  //   };
+
   const onHandleChange = (event) => {
     const { name, value } = event.target;
-    if (name === "name") setName(value);
-    if (name === "email") setEmail(value);
-    if (name === "password") setPassword(value);
-    //   this.setState({ [name]: value });
+    setUser((prev) => ({ ...prev, [name]: value }));
   };
+
+  //   const onHandleSubmit = useCallback(
+  //     (event) => {
+  //       event.preventDefault();
+  //       match.url === "/register"
+  //         ? onRegister(name, email, password)
+  //         : onLogin(email, password);
+
+  //       setName("");
+  //       setEmail("");
+  //       setPassword("");
+  //     },
+  //     [name, email, password, match.url, onRegister, onLogin]
+  //   );
 
   const onHandleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      match.url === "/register"
-        ? onRegister(name, email, password)
-        : onLogin(email, password);
-
-      setName("");
-      setEmail("");
-      setPassword("");
+      match.url === "/register" ? onRegister(user) : onLogin(user);
+      setUser("");
     },
-    [name, email, password, match.url, onRegister, onLogin]
+    [user, match.url, onRegister, onLogin]
   );
 
   return (
@@ -72,7 +93,7 @@ const Auth = () => {
           <TextField
             type="text"
             name="name"
-            value={name}
+            value={user.name}
             minLength="3"
             required
             onChange={onHandleChange}
@@ -86,7 +107,7 @@ const Auth = () => {
           type="email"
           name="email"
           onChange={onHandleChange}
-          value={email}
+          value={user.email}
           minLength="3"
           required
           label="Email"
@@ -97,7 +118,7 @@ const Auth = () => {
         <TextField
           type="password"
           name="password"
-          value={password}
+          value={user.password}
           onChange={onHandleChange}
           minLength="3"
           required
@@ -126,6 +147,7 @@ export default Auth;
 //   const prevError = useRef("");
 // prevError.current = isError;
 // useRef
+
 // <button type="submit" className="user-button">
 //   {match.url === "/register" ? "Register" : "Login"}
 // </button>;

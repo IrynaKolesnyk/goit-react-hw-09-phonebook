@@ -4,41 +4,69 @@ import ContactFormStyled from "./ContactFormStyled";
 import { getContacts } from "../../redux/phoneBook/contacts-selectors";
 import { addContact } from "../../redux/phoneBook/contacts-operations";
 
+const initialState = {
+  name: "",
+  number: "",
+};
+
 const ContactForm = () => {
+  const [contactPhone, setContactPhone] = useState(initialState);
   const dispatch = useDispatch();
 
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  // const [name, setName] = useState("");
+  // const [number, setNumber] = useState("");
 
   const contacts = useSelector(getContacts);
 
   const onSubmit = useCallback(
-    (name, number) => {
+    ({ name, number }) => {
       dispatch(addContact(name, number));
     },
     [dispatch]
   );
 
+  // const handelInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   if (name === "name") setName(value);
+  //   if (name === "number") setNumber(value);
+  // };
+
   const handelInputChange = (event) => {
     const { name, value } = event.target;
-    if (name === "name") setName(value);
-    if (name === "number") setNumber(value);
+    setContactPhone((prev) => ({ ...prev, [name]: value }));
   };
+
+  // const handelFormSubmit = useCallback(
+  //   (event) => {
+  //     event.preventDefault();
+  //     const existContact = contacts.find(
+  //       (contact) =>
+  //         contact.name.toLowerCase() === contactPhone.name.toLowerCase()
+  //     );
+  //     if (existContact) {
+  //       return alert(`Contact "${contactPhone.name}" already exists`);
+  //     }
+  //     onSubmit(name, number);
+  //     setName("");
+  //     setNumber("");
+  //   },
+  //   [contacts, name, number, onSubmit]
+  // );
 
   const handelFormSubmit = useCallback(
     (event) => {
       event.preventDefault();
       const existContact = contacts.find(
-        (contact) => contact.name.toLowerCase() === name.toLowerCase()
+        (contact) =>
+          contact.name.toLowerCase() === contactPhone.name.toLowerCase()
       );
       if (existContact) {
-        return alert(`Contact "${name}" already exists`);
+        return alert(`Contact "${contactPhone.name}" already exists`);
       }
-      onSubmit(name, number);
-      setName("");
-      setNumber("");
+      onSubmit(contactPhone);
+      setContactPhone({ name: "", number: "" });
     },
-    [contacts, name, number, onSubmit]
+    [contacts, contactPhone, onSubmit]
   );
 
   return (
@@ -50,7 +78,7 @@ const ContactForm = () => {
             className="form-input"
             type="text"
             name="name"
-            value={name}
+            value={contactPhone.name}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name can only contains letters, apostrophe, dashes and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan etc."
             required
@@ -64,7 +92,7 @@ const ContactForm = () => {
             className="form-input"
             type="tel"
             name="number"
-            value={number}
+            value={contactPhone.number}
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number can only contains digits (min 8 digits), spaces, dashes, parentheses and can start with +"
             required
